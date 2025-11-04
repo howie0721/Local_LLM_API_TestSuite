@@ -74,10 +74,14 @@ jobs:
       - name: Run tests (parallel)
         if: ${{ inputs.parallel }}
         run: |
+          now=$(date +"%Y-%m-%d_%H%M%S")
+          marker=$(echo "${{ inputs.test_markers }}" | tr ' ' '_')
+          outdir="allure-report/${marker}/${now}/report"
+          mkdir -p "$outdir"
           pytest -m "${{ inputs.test_markers }}" \
             -v \
             --tb=short \
-            --alluredir=allure-results \
+            --alluredir="$outdir" \
             -n 2 \
             --timeout=180
         timeout-minutes: 20
@@ -85,10 +89,14 @@ jobs:
       - name: Run tests (sequential)
         if: ${{ !inputs.parallel }}
         run: |
+          now=$(date +"%Y-%m-%d_%H%M%S")
+          marker=$(echo "${{ inputs.test_markers }}" | tr ' ' '_')
+          outdir="allure-report/${marker}/${now}/report"
+          mkdir -p "$outdir"
           pytest -m "${{ inputs.test_markers }}" \
             -v \
             --tb=short \
-            --alluredir=allure-results \
+            --alluredir="$outdir" \
             --timeout=180
         timeout-minutes: 25
       
@@ -102,19 +110,19 @@ jobs:
       
       - name: Generate Allure report
         if: always()
-        uses: simple-elf/allure-report-action@master
-        with:
-          allure_results: allure-results
-          allure_history: allure-history
-          keep_reports: 10
+        run: |
+          # 產生最新 marker+時間戳的報告
+          marker=$(echo "${{ inputs.test_markers }}" | tr ' ' '_')
+          latest_dir=$(ls -dt allure-report/${marker}/*/report | head -n1)
+          allure generate "$latest_dir" -o "$latest_dir" --clean
       
       - name: Deploy Allure report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-history
-          destination_dir: manual-tests
+          publish_dir: allure-report
+          destination_dir: allure-report
       
       - name: Stop Ollama
         if: always()

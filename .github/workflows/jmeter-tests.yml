@@ -1,0 +1,116 @@
+name: JMeter Performance & Stability Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Test type to run'
+        required: true
+        default: 'stability'
+        type: choice
+        options:
+          - 'stability'
+          - 'performance'
+          - 'all'
+  schedule:
+    # 每週日凌晨 2 點自動執行
+    - cron: '0 2 * * 0'
+
+jobs:
+  jmeter-test:
+    runs-on: ubuntu-latest
+    env:
+      OLLAMA_MODEL: tinyllama
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+      
+      - name: Install JMeter
+        run: |
+          wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
+          tar -xzf apache-jmeter-5.6.3.tgz
+          echo "$(pwd)/apache-jmeter-5.6.3/bin" >> $GITHUB_PATH
+      
+      - name: Set up Ollama (Docker)
+        run: |
+          docker pull ollama/ollama:latest
+          docker run -d --name ollama -p 11434:11434 ollama/ollama:latest
+          echo "Waiting for Ollama service to start..."
+          sleep 15
+      
+      - name: Wait for Ollama to be ready
+        run: |
+          echo "Checking Ollama API availability..."
+          timeout 90 bash -c 'until curl -s http://localhost:11434/api/version > /dev/null; do echo "Waiting..."; sleep 3; done'
+          echo "Ollama API is ready!"
+      
+      - name: Pull and load model
+        run: |
+          echo "Pulling ${OLLAMA_MODEL} model..."
+          docker exec ollama ollama pull ${OLLAMA_MODEL}
+          echo "Model is loaded and ready!"
+        timeout-minutes: 5
+      
+      - name: Run JMeter Stability Tests
+        if: ${{ inputs.test_type == 'stability' || inputs.test_type == 'all' || github.event_name == 'schedule' }}
+        run: |
+          now=$(date +"%Y-%m-%d_%H%M%S")
+          for jmx in tests/stability/*.jmx; do
+            if [ -f "$jmx" ]; then
+              echo "Running stability test: $jmx"
+              test_name=$(basename "$jmx" .jmx)
+              out_dir="jmeter-results/stability/${now}/${test_name}/report"
+              mkdir -p "$out_dir"
+              jmeter -n -t "$jmx" -l "jmeter-results/stability/${now}/${test_name}/${test_name}.jtl" -e -o "$out_dir" || true
+            fi
+          done
+        timeout-minutes: 30
+      
+      - name: Run JMeter Performance Tests
+        if: ${{ inputs.test_type == 'performance' || inputs.test_type == 'all' }}
+        run: |
+          now=$(date +"%Y-%m-%d_%H%M%S")
+          for jmx in tests/performance/*.jmx; do
+            if [ -f "$jmx" ]; then
+              echo "Running performance test: $jmx"
+              test_name=$(basename "$jmx" .jmx)
+              out_dir="jmeter-results/performance/${now}/${test_name}/report"
+              mkdir -p "$out_dir"
+              jmeter -n -t "$jmx" -l "jmeter-results/performance/${now}/${test_name}/${test_name}.jtl" -e -o "$out_dir" || true
+            fi
+          done
+        timeout-minutes: 30
+      
+      - name: Upload JMeter Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-results-${{ inputs.test_type || 'scheduled' }}
+          path: jmeter-results/
+          retention-days: 14
+      
+      - name: Deploy JMeter Reports to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: jmeter-results
+          destination_dir: jmeter-reports
+      
+      - name: Stop Ollama
+        if: always()
+        run: |
+          docker stop ollama
+          docker rm ollama
