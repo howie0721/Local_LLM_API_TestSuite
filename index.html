@@ -203,12 +203,12 @@
         <script>
         // 自動找到最新的報告並更新連結
         (function() {
-            // 這會在報告產生後由新的 workflow 更新
-            const latestPR = 'pr-tests/allure-report/'; // 會指向最新報告
+            // 指向最新報告
+            const latestPR = 'pr-tests/allure-report/2025-11-04_233000/';
             const latestNightly = 'nightly-tests/';
-            const latestManual = 'manual-tests/';
+            const latestManual = 'manual-tests/2025-11-04_225256/report/';
             
-            // 更新連結（如果需要的話）
+            // 更新連結
             document.getElementById('pr-link').href = latestPR;
             document.getElementById('nightly-link').href = latestNightly;
             document.getElementById('manual-link').href = latestManual;
