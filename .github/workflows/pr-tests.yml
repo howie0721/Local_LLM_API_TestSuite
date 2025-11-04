@@ -34,12 +34,23 @@ jobs:
         run: |
           docker pull ollama/ollama:latest
           docker run -d --name ollama -p 11434:11434 ollama/ollama:latest
-          sleep 10
-          docker exec ollama ollama pull llama3
+          echo "Waiting for Ollama service to start..."
+          sleep 15
       
       - name: Wait for Ollama to be ready
         run: |
-          timeout 60 bash -c 'until curl -s http://localhost:11434/api/version; do sleep 2; done'
+          echo "Checking Ollama API availability..."
+          timeout 90 bash -c 'until curl -s http://localhost:11434/api/version > /dev/null; do echo "Waiting..."; sleep 3; done'
+          echo "Ollama API is ready!"
+      
+      - name: Pull and load model
+        run: |
+          echo "Pulling llama3 model..."
+          docker exec ollama ollama pull llama3
+          echo "Testing model with a simple query..."
+          docker exec ollama ollama run llama3 "Hi" --verbose
+          echo "Model is loaded and ready!"
+        timeout-minutes: 5
       
       - name: Run fast tests (unit, boundary, compatibility, error_handling)
         run: |
@@ -48,7 +59,9 @@ jobs:
             --tb=short \
             --alluredir=allure-results \
             --maxfail=5 \
-            -n auto
+            -n auto \
+            --timeout=180
+        timeout-minutes: 15
       
       - name: Upload Allure results
         if: always()
