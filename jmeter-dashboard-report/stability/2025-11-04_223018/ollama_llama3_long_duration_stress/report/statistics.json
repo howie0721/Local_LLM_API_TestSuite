@@ -1,0 +1,34 @@
+{
+  "Ollama llama3 Long Duration" : {
+    "transaction" : "Ollama llama3 Long Duration",
+    "sampleCount" : 1,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 7965.0,
+    "medianResTime" : 7965.0,
+    "minResTime" : 7965.0,
+    "maxResTime" : 7965.0,
+    "pct1ResTime" : 7965.0,
+    "pct2ResTime" : 7965.0,
+    "pct3ResTime" : 7965.0,
+    "throughput" : 0.12554927809165098,
+    "receivedKBytesPerSec" : 0.10507395637162587,
+    "sentKBytesPerSec" : 0.033103813559322036
+  },
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 1,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 7965.0,
+    "medianResTime" : 7965.0,
+    "minResTime" : 7965.0,
+    "maxResTime" : 7965.0,
+    "pct1ResTime" : 7965.0,
+    "pct2ResTime" : 7965.0,
+    "pct3ResTime" : 7965.0,
+    "throughput" : 0.12554927809165098,
+    "receivedKBytesPerSec" : 0.10507395637162587,
+    "sentKBytesPerSec" : 0.033103813559322036
+  }
+}
