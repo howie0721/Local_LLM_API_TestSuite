@@ -105,6 +105,26 @@ jobs:
           name: allure-results-manual
           path: allure-report
           retention-days: 7
+      
+      - name: Stop Ollama
+        if: always()
+        run: |
+          docker stop ollama
+          docker rm ollama
+
+  allure-report:
+    runs-on: ubuntu-latest
+    needs: manual-test
+    if: always()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download artifact (manual allure results)
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results-manual
+          path: allure-report-merged
 
       - name: Install Allure CLI
         if: always()
@@ -114,24 +134,20 @@ jobs:
           sudo tar -zxvf allure-commandline.tgz -C /opt/
           sudo ln -s /opt/allure-2.27.0/bin/allure /usr/bin/allure
           allure --version
-      
-      - name: Generate Allure report
-        if: always()
+
+      - name: Generate Allure report(s)
         run: |
-          # 產生最新 {時間}/report 報告
-          latest_dir=$(ls -dt allure-report/*/report | head -n1)
-          allure generate "$latest_dir" -o "$latest_dir" --clean
-      
+          # 針對所有 {時間}/report 目錄逐一產生 HTML 報告
+          shopt -s nullglob
+          for dir in $(find allure-report-merged -type d -name report); do
+            echo "Generating Allure report for: $dir"
+            allure generate "$dir" -o "$dir" --clean || true
+          done
+
       - name: Deploy Allure report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report
+          publish_dir: allure-report-merged
           destination_dir: pr-tests/manual-tests
-      
-      - name: Stop Ollama
-        if: always()
-        run: |
-          docker stop ollama
-          docker rm ollama

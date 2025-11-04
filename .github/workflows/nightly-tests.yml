@@ -112,12 +112,12 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          path: allure-results-combined
+          path: allure-report-merged
       
       - name: Merge Allure results
         run: |
-          mkdir -p allure-report-merged
-          find allure-results-combined -type f -name "*.json" -exec cp --parents {} allure-report-merged/ \;
+          # 不需合併，直接使用下載的目錄結構
+          echo "Skip merge, use allure-report-merged as is."
 
       - name: Install Allure CLI
         run: |
