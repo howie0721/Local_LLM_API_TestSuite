@@ -63,8 +63,7 @@ jobs:
       - name: Run fast tests (unit, boundary, compatibility, error_handling)
         run: |
           now=$(date +"%Y-%m-%d_%H%M%S")
-          marker="unit_or_boundary_or_compatibility_or_error_handling"
-          outdir="allure-report/${marker}/${now}/report"
+          outdir="allure-report/${now}/report"
           mkdir -p "$outdir"
           pytest -m "unit or boundary or compatibility or error_handling" \
             -v \
@@ -110,7 +109,7 @@ jobs:
       
       - name: Generate Allure report
         run: |
-          # 產生所有 marker+時間戳的報告
+          # 產生所有 {時間}/report 報告
           for dir in $(find allure-report-merged -type d -name report); do
             allure generate "$dir" -o "$dir" --clean || true
           done

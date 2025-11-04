@@ -70,15 +70,14 @@ jobs:
           echo "Testing model with a simple query..."
           docker exec ollama ollama run ${OLLAMA_MODEL} "Hi" --verbose
           echo "Model is loaded and ready!"
-        timeout-minutes: 5
+        timeout-minutes: 20
       
       - name: Run ${{ matrix.test-suite.name }} tests
         run: |
           now=$(date +"%Y-%m-%d_%H%M%S")
-          marker="${{ matrix.test-suite.markers }}"
-          outdir="allure-report/${marker}/${now}/report"
+          outdir="allure-report/${now}/report"
           mkdir -p "$outdir"
-          pytest -m "$marker" \
+          pytest -m "${{ matrix.test-suite.markers }}" \
             -v \
             --tb=short \
             --alluredir="$outdir" \
@@ -122,7 +121,7 @@ jobs:
       
       - name: Generate Allure report
         run: |
-          # 產生所有 marker+時間戳的報告
+          # 產生所有 {時間}/report 報告
           for dir in $(find allure-report-merged -type d -name report); do
             allure generate "$dir" -o "$dir" --clean || true
           done

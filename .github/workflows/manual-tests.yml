@@ -69,14 +69,13 @@ jobs:
           echo "Testing model with a simple query..."
           docker exec ollama ollama run ${OLLAMA_MODEL} "Hi" --verbose
           echo "Model is loaded and ready!"
-        timeout-minutes: 5
+        timeout-minutes: 20
       
       - name: Run tests (parallel)
         if: ${{ inputs.parallel }}
         run: |
           now=$(date +"%Y-%m-%d_%H%M%S")
-          marker=$(echo "${{ inputs.test_markers }}" | tr ' ' '_')
-          outdir="allure-report/${marker}/${now}/report"
+          outdir="allure-report/${now}/report"
           mkdir -p "$outdir"
           pytest -m "${{ inputs.test_markers }}" \
             -v \
@@ -90,8 +89,7 @@ jobs:
         if: ${{ !inputs.parallel }}
         run: |
           now=$(date +"%Y-%m-%d_%H%M%S")
-          marker=$(echo "${{ inputs.test_markers }}" | tr ' ' '_')
-          outdir="allure-report/${marker}/${now}/report"
+          outdir="allure-report/${now}/report"
           mkdir -p "$outdir"
           pytest -m "${{ inputs.test_markers }}" \
             -v \
@@ -111,9 +109,8 @@ jobs:
       - name: Generate Allure report
         if: always()
         run: |
-          # 產生最新 marker+時間戳的報告
-          marker=$(echo "${{ inputs.test_markers }}" | tr ' ' '_')
-          latest_dir=$(ls -dt allure-report/${marker}/*/report | head -n1)
+          # 產生最新 {時間}/report 報告
+          latest_dir=$(ls -dt allure-report/*/report | head -n1)
           allure generate "$latest_dir" -o "$latest_dir" --clean
       
       - name: Deploy Allure report to GitHub Pages
