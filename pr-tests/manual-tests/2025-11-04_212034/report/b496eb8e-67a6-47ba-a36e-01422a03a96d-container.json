@@ -1,1 +1,0 @@
-{"uuid": "2a229472-6d4c-4131-80f2-8ee22acbe9be", "children": ["1cc18bcc-b321-428f-beff-22d8f6f55cdb"], "befores": [{"name": "ollama_client", "status": "passed", "start": 1762291238542, "stop": 1762291238542}], "start": 1762291238542, "stop": 1762291240121}
