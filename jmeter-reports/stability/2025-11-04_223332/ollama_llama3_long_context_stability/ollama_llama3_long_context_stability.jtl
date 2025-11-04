@@ -1,2 +1,0 @@
-timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
-1762295617026,39,Ollama llama3 Multi-turn,404,Not Found,Long Context 1-1,text,false,Test failed: code expected to contain /200/,166,296,1,1,http://localhost:11434/api/generate,36,0,31
