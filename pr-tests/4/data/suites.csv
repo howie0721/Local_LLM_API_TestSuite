@@ -1,0 +1,51 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","2518","TC-COMPATIBILITY-0003 LLM 多語言輸入格式相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:48 UTC 2025","passed","Tue Nov 04 14:33:50 UTC 2025","","test_multilingual_input_schema","",""
+"","3121","TC-COMPATIBILITY-0003 LLM 多語言輸入格式相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:53 UTC 2025","passed","Tue Nov 04 14:33:56 UTC 2025","","test_multilingual_input_schema","",""
+"
+    TC-UNIT-0004: 驗證 /api/generate 回傳 JSON 必有 response、done、done_reason，且型別正確
+    ","2933","test_TC_UNIT_0004_generate_response_format","tests.unit","Tue Nov 04 14:34:05 UTC 2025","passed","Tue Nov 04 14:34:08 UTC 2025","","test_generate_response_format","",""
+"","2791","TC-COMPATIBILITY-0003 LLM 多語言輸入格式相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:45 UTC 2025","passed","Tue Nov 04 14:33:48 UTC 2025","","test_multilingual_input_schema","",""
+"","3013","TC-COMPATIBILITY-0004 LLM 特殊字元/編碼相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:56 UTC 2025","passed","Tue Nov 04 14:33:59 UTC 2025","","test_special_char_schema","",""
+"","46868","TC-BOUNDARY-0002 Prompt 長度=8192 (超過上限)","tests.boundary","Tue Nov 04 14:32:56 UTC 2025","failed","Tue Nov 04 14:33:43 UTC 2025","","test_prompt_length_over","",""
+"
+	TC-UNIT-0001: 測試本地 Ollama API 是否可連線並正確回應版本資訊
+	","2","test_TC_UNIT_0001_connection","tests.unit","Tue Nov 04 14:34:05 UTC 2025","passed","Tue Nov 04 14:34:05 UTC 2025","","test_connection","",""
+"","2838","TC-COMPATIBILITY-0003 LLM 多語言輸入格式相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:50 UTC 2025","passed","Tue Nov 04 14:33:53 UTC 2025","","test_multilingual_input_schema","",""
+"","3270","TC-COMPATIBILITY-0004 LLM 特殊字元/編碼相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:58 UTC 2025","passed","Tue Nov 04 14:34:01 UTC 2025","","test_special_char_schema","",""
+"","3003","TC-COMPATIBILITY-0003 LLM 多語言輸入格式相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:43 UTC 2025","passed","Tue Nov 04 14:33:46 UTC 2025","","test_multilingual_input_schema","",""
+"","46740","TC-BOUNDARY-0004 Prompt 極大 token 數 (多空格)","tests.boundary","Tue Nov 04 14:32:03 UTC 2025","passed","Tue Nov 04 14:32:50 UTC 2025","","test_prompt_max_tokens","",""
+"","3204","TC-COMPATIBILITY-0003 LLM 多語言輸入格式相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:55 UTC 2025","passed","Tue Nov 04 14:33:58 UTC 2025","","test_multilingual_input_schema","",""
+"
+    TC-UNIT-0003: 傳入正確 model 與 prompt，驗證 /api/generate 回傳 200 且 response 欄位為非空字串
+    ","2684","test_TC_UNIT_0003_generate_success","tests.unit","Tue Nov 04 14:34:08 UTC 2025","passed","Tue Nov 04 14:34:10 UTC 2025","","test_generate_success","",""
+"","2480","TC-COMPATIBILITY-0003 LLM 多語言輸入格式相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:46 UTC 2025","passed","Tue Nov 04 14:33:49 UTC 2025","","test_multilingual_input_schema","",""
+"
+    TC-ERROR-0004: 呼叫 /api/generate 時缺少必要參數，應回傳 400 或對應錯誤
+    ","3","test_TC_ERROR_0004_missing_required_param","tests.error_handling","Tue Nov 04 14:34:05 UTC 2025","failed","Tue Nov 04 14:34:05 UTC 2025","","test_missing_required_param","",""
+"","1314","TC-BOUNDARY-0003 Prompt 長度=0 (空字串)","tests.boundary","Tue Nov 04 14:32:03 UTC 2025","passed","Tue Nov 04 14:32:05 UTC 2025","","test_prompt_length_empty","",""
+"
+    TC-UNIT-0006: 驗證 /api/generate 回傳資料的 response 欄位型別與內容
+    ","2647","test_TC_UNIT_0006_parse_generate_response","tests.unit","Tue Nov 04 14:34:06 UTC 2025","passed","Tue Nov 04 14:34:09 UTC 2025","","test_parse_generate_response","",""
+"
+    TC-ERROR-0002: 呼叫不存在的 API 路徑，應回傳 404
+    ","3","test_TC_ERROR_0002_api_notfound","tests.error_handling","Tue Nov 04 14:34:05 UTC 2025","passed","Tue Nov 04 14:34:05 UTC 2025","","test_api_notfound","",""
+"","5426","TC-COMPATIBILITY-0004 LLM 特殊字元/編碼相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:34:01 UTC 2025","passed","Tue Nov 04 14:34:06 UTC 2025","","test_special_char_schema","",""
+"","51598","TC-BOUNDARY-0001 Prompt 長度=1024 (允許上限)","tests.boundary","Tue Nov 04 14:32:05 UTC 2025","passed","Tue Nov 04 14:32:56 UTC 2025","","test_prompt_length_max","",""
+"
+    TC-UNIT-0002: 驗證 /api/version 回傳 JSON 結構與型別
+    ","2","test_TC_UNIT_0002_version_response_format","tests.unit","Tue Nov 04 14:34:09 UTC 2025","passed","Tue Nov 04 14:34:09 UTC 2025","","test_version_response_format","",""
+"","2853","TC-COMPATIBILITY-0003 LLM 多語言輸入格式相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:52 UTC 2025","passed","Tue Nov 04 14:33:55 UTC 2025","","test_multilingual_input_schema","",""
+"","4","TC-COMPATIBILITY-0002 LLM API 錯誤處理格式相容性 (標準欄位)","tests.compatibility","Tue Nov 04 14:32:58 UTC 2025","passed","Tue Nov 04 14:32:58 UTC 2025","","test_error_response_schema","",""
+"
+    TC-ERROR-0003: 用錯誤的 HTTP method 呼叫 /api/version，應回傳 405
+    ","2","test_TC_ERROR_0003_method_not_allowed","tests.error_handling","Tue Nov 04 14:34:05 UTC 2025","passed","Tue Nov 04 14:34:05 UTC 2025","","test_method_not_allowed","",""
+"
+    TC-UNIT-0005: 連續多次呼叫 /api/version，回傳型別與內容一致
+    ","6","test_TC_UNIT_0005_multiple_version_requests_consistency","tests.unit","Tue Nov 04 14:34:06 UTC 2025","passed","Tue Nov 04 14:34:06 UTC 2025","","test_multiple_version_requests_consistency","",""
+"","2968","TC-COMPATIBILITY-0003 LLM 多語言輸入格式相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:49 UTC 2025","passed","Tue Nov 04 14:33:52 UTC 2025","","test_multilingual_input_schema","",""
+"","7619","TC-COMPATIBILITY-0001 LLM API Schema 相容性 (標準欄位)","tests.compatibility","Tue Nov 04 14:32:50 UTC 2025","passed","Tue Nov 04 14:32:58 UTC 2025","","test_api_schema","",""
+"
+    TC-ERROR-0001: 連線到不存在的 Ollama 服務，應 raise 例外
+    ","1","test_TC_ERROR_0001_cannot_connect","tests.error_handling","Tue Nov 04 14:34:06 UTC 2025","passed","Tue Nov 04 14:34:06 UTC 2025","","test_cannot_connect","",""
+"","5551","TC-COMPATIBILITY-0004 LLM 特殊字元/編碼相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:33:59 UTC 2025","passed","Tue Nov 04 14:34:05 UTC 2025","","test_special_char_schema","",""
+"","47140","TC-COMPATIBILITY-0003 LLM 多語言輸入格式相容性 (fixtures 驅動)","tests.compatibility","Tue Nov 04 14:32:58 UTC 2025","passed","Tue Nov 04 14:33:45 UTC 2025","","test_multilingual_input_schema","",""
