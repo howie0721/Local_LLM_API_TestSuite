@@ -1,0 +1,34 @@
+{
+  "Ollama llama3 Multi-turn" : {
+    "transaction" : "Ollama llama3 Multi-turn",
+    "sampleCount" : 1,
+    "errorCount" : 1,
+    "errorPct" : 100.0,
+    "meanResTime" : 64.0,
+    "medianResTime" : 64.0,
+    "minResTime" : 64.0,
+    "maxResTime" : 64.0,
+    "pct1ResTime" : 64.0,
+    "pct2ResTime" : 64.0,
+    "pct3ResTime" : 64.0,
+    "throughput" : 15.625,
+    "receivedKBytesPerSec" : 2.532958984375,
+    "sentKBytesPerSec" : 4.5166015625
+  },
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 1,
+    "errorCount" : 1,
+    "errorPct" : 100.0,
+    "meanResTime" : 64.0,
+    "medianResTime" : 64.0,
+    "minResTime" : 64.0,
+    "maxResTime" : 64.0,
+    "pct1ResTime" : 64.0,
+    "pct2ResTime" : 64.0,
+    "pct3ResTime" : 64.0,
+    "throughput" : 15.625,
+    "receivedKBytesPerSec" : 2.532958984375,
+    "sentKBytesPerSec" : 4.5166015625
+  }
+}
