@@ -103,7 +103,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results-manual
-          path: allure-results
+          path: allure-report
           retention-days: 7
 
       - name: Install Allure CLI
@@ -124,7 +124,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
-          destination_dir: allure-report
+          destination_dir: pr-tests/manual-tests
       
       - name: Stop Ollama
         if: always()

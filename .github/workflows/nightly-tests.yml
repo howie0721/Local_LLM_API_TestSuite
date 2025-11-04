@@ -118,6 +118,11 @@ jobs:
         run: |
           mkdir -p allure-report-merged
           find allure-results-combined -type f -name "*.json" -exec cp --parents {} allure-report-merged/ \;
+
+      - name: Install Allure CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y allure
       
       - name: Generate Allure report
         run: |
@@ -132,7 +137,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report-merged
-          destination_dir: nightly-tests
+          destination_dir: pr-tests/nightly-tests
       
       - name: Send notification on failure
         if: failure()

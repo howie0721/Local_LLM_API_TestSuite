@@ -118,9 +118,9 @@ def validator():
     return test_helper.ResponseValidator()
 
 # ========== Pytest Fixture 提供額外工具 ==========
-@pytest.fixture
-def test_helper_fixture():
-    """提供測試輔助工具"""
+@pytest.fixture(name="test_helper")
+def _test_helper_fixture():
+    """提供測試輔助工具（別名：test_helper）"""
     return test_helper.TestHelper()
 
 @pytest.fixture
@@ -129,6 +129,6 @@ def schema_validator():
     return test_helper.SchemaValidator()
 
 @pytest.fixture
-def batch_helper():
-    """提供批次測試輔助工具"""
-    return test_helper.BatchTestHelper()
+def batch_helper(ollama_client):
+    """提供批次測試輔助工具，並注入 ollama_client 以相容既有測試寫法"""
+    return test_helper.BatchTestHelper(ollama_client)

@@ -243,18 +243,13 @@
 
 ### 新增測試時
 1. 確認對應的需求 ID
+# 需求到測試對應（Traceability）
 2. 更新對應表
 3. 更新覆蓋率統計
 
 ### 定期審查
-- **頻率**: 每月審查一次
-- **檢查項目**:
-  - 所有 High/Critical 需求是否已覆蓋
   - 測試通過率是否 > 95%
   - 未覆蓋需求的處理進度
-
----
-
 ## 參考資源
 
 - [Requirements Traceability Matrix (RTM)](https://en.wikipedia.org/wiki/Traceability_matrix)

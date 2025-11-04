@@ -58,59 +58,38 @@ tests/
 
 ### 3. **可重用性 (Reusability)**
 
+# 測試框架設計（重構版）
 **目標**: 最大化測試元件的重用
 
 **實踐**:
 - ✅ Fixture 作用域管理（session, module, function）
-- ✅ Helper 函式庫
-- ✅ 測試資料共用（JSON fixtures）
-
-**範例**:
 ```python
 # conftest.py
-@pytest.fixture(scope="session")
-def ollama_client():
     """Session scope: 所有測試共用一個客戶端"""
     client = OllamaClient()
     yield client
     client.close()
-
 @pytest.fixture
 def sample_messages():
     """Function scope: 每個測試獨立的訊息副本"""
-    return [{"role": "user", "content": "Hello"}]
 ```
-
 ---
-
 ### 4. **隔離性 (Isolation)**
 
 **目標**: 測試之間互不影響
 
 **實踐**:
-- ✅ 每個測試獨立執行
 - ✅ 使用 fixture teardown 清理資源
 - ✅ 避免共用可變狀態
 
-**範例**:
 ```python
 @pytest.fixture
-def temp_data():
-    data = {"temp": []}
-    yield data
     # Teardown: 清理資料
     data.clear()
-```
-
 ---
-
-### 5. **可讀性 (Readability)**
 
 **目標**: 測試即文件，易於理解
 
-**實踐**:
-- ✅ AAA 模式（Arrange-Act-Assert）
-- ✅ 清晰的測試命名
 - ✅ 完整的 docstring
 - ✅ Allure 裝飾器增強可讀性
 

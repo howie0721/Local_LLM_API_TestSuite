@@ -59,6 +59,16 @@ class TestHelper:
         code = match.group(1).strip()
         return json.loads(code)
     @staticmethod
+    def extract_json_from_response(text: str) -> dict:
+        """
+        與既有測試相容的別名方法：嘗試直接解析文字為 JSON，失敗則從 code block 提取。
+        """
+        import json
+        try:
+            return json.loads(text)
+        except Exception:
+            return TestHelper.extract_json_from_codeblock(text)
+    @staticmethod
     def extract_code_from_codeblock(text: str, language: str = None) -> str:
         import re
         if language:
@@ -123,7 +133,28 @@ class SchemaValidator:
         assert found, "錯誤訊息內容應為字串或可序列化型別"
 
 class BatchTestHelper:
-    """批次測試輔助工具"""
+    """批次測試輔助工具
+
+    同時支援：
+    - 以 fixture 注入的 self.ollama_client 寫法（相容既有測試 batch_helper.ollama_client.chat(...)、execute_batch(...)）。
+    - 傳入 client 的靜態方法寫法（run_multiple_times / run_with_multiple_prompts）。
+    """
+    def __init__(self, ollama_client=None):
+        self.ollama_client = ollama_client
+
+    def _require_client(self):
+        if self.ollama_client is None:
+            raise RuntimeError("BatchTestHelper 尚未注入 ollama_client，請於 fixture 傳入或改用靜態方法並傳 client 參數。")
+
+    def execute_batch(self, messages: list, count: int = 3, timeout: int = 60, model: str = None) -> list:
+        """相容既有測試的批量執行方法。"""
+        self._require_client()
+        results = []
+        for _ in range(count):
+            response = self.ollama_client.chat(messages=messages, timeout=timeout, model=model)
+            results.append(response)
+        return results
+
     @staticmethod
     def run_multiple_times(client, method: str, count: int = 3, **kwargs) -> list:
         results = []
@@ -136,6 +167,7 @@ class BatchTestHelper:
                 raise ValueError(f"不支援的方法: {method}")
             results.append(response)
         return results
+
     @staticmethod
     def run_with_multiple_prompts(client, prompts: list, **kwargs) -> list:
         results = []
