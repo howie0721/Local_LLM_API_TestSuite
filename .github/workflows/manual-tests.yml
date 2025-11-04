@@ -75,12 +75,12 @@ jobs:
         if: ${{ inputs.parallel }}
         run: |
           now=$(date +"%Y-%m-%d_%H%M%S")
-          outdir="allure-report/${now}/report"
-          mkdir -p "$outdir"
+          resultsdir="allure-results/${now}"
+          mkdir -p "$resultsdir"
           pytest -m "${{ inputs.test_markers }}" \
             -v \
             --tb=short \
-            --alluredir="$outdir" \
+            --alluredir="$resultsdir" \
             -n 2 \
             --timeout=180
         timeout-minutes: 20
@@ -89,12 +89,12 @@ jobs:
         if: ${{ !inputs.parallel }}
         run: |
           now=$(date +"%Y-%m-%d_%H%M%S")
-          outdir="allure-report/${now}/report"
-          mkdir -p "$outdir"
+          resultsdir="allure-results/${now}"
+          mkdir -p "$resultsdir"
           pytest -m "${{ inputs.test_markers }}" \
             -v \
             --tb=short \
-            --alluredir="$outdir" \
+            --alluredir="$resultsdir" \
             --timeout=180
         timeout-minutes: 25
       
@@ -103,7 +103,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results-manual
-          path: allure-report
+          path: allure-results
           retention-days: 7
       
       - name: Stop Ollama
@@ -137,11 +137,16 @@ jobs:
 
       - name: Generate Allure report(s)
         run: |
-          # 針對所有 {時間}/report 目錄逐一產生 HTML 報告
+          # 針對每個時間戳目錄，從 allure-results 產生 HTML 報告
           shopt -s nullglob
-          for dir in $(find allure-report-merged -type d -name report); do
-            echo "Generating Allure report for: $dir"
-            allure generate "$dir" -o "$dir" --clean || true
+          for resultsdir in allure-report-merged/allure-results/*/; do
+            if [ -d "$resultsdir" ]; then
+              timestamp=$(basename "$resultsdir")
+              reportdir="allure-report-final/${timestamp}"
+              mkdir -p "$reportdir"
+              echo "Generating report from $resultsdir to $reportdir"
+              allure generate "$resultsdir" -o "$reportdir" --clean || true
+            fi
           done
 
       - name: Deploy Allure report to GitHub Pages
@@ -149,5 +154,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report-merged
+          publish_dir: allure-report-final
           destination_dir: manual-tests

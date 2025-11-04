@@ -75,12 +75,12 @@ jobs:
       - name: Run ${{ matrix.test-suite.name }} tests
         run: |
           now=$(date +"%Y-%m-%d_%H%M%S")
-          outdir="allure-report/${now}/report"
-          mkdir -p "$outdir"
+          resultsdir="allure-results/${now}"
+          mkdir -p "$resultsdir"
           pytest -m "${{ matrix.test-suite.markers }}" \
             -v \
             --tb=short \
-            --alluredir="$outdir" \
+            --alluredir="$resultsdir" \
             -n 2 \
             --timeout=180
         continue-on-error: true
@@ -91,7 +91,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results-${{ matrix.test-suite.name }}-py${{ matrix.python-version }}
-          path: allure-report
+          path: allure-results
           retention-days: 30
       
       - name: Stop Ollama
@@ -116,8 +116,14 @@ jobs:
       
       - name: Merge Allure results
         run: |
-          # 不需合併，直接使用下載的目錄結構
-          echo "Skip merge, use allure-report-merged as is."
+          # 合併所有測試套件的結果到單一目錄
+          mkdir -p allure-results-combined
+          for artifact_dir in allure-report-merged/allure-results-*/allure-results/*; do
+            if [ -d "$artifact_dir" ]; then
+              echo "Copying results from $artifact_dir"
+              cp -r "$artifact_dir"/* allure-results-combined/ || true
+            fi
+          done
 
       - name: Install Allure CLI
         run: |
@@ -129,17 +135,16 @@ jobs:
       
       - name: Generate Allure report
         run: |
-          # 產生所有 {時間}/report 報告
-          for dir in $(find allure-report-merged -type d -name report); do
-            allure generate "$dir" -o "$dir" --clean || true
-          done
+          # 從合併的結果產生單一報告
+          mkdir -p allure-report-final
+          allure generate allure-results-combined -o allure-report-final --clean
       
       - name: Deploy Allure report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report-merged
+          publish_dir: allure-report-final
           destination_dir: nightly-tests
       
       - name: Send notification on failure

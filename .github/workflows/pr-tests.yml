@@ -63,12 +63,12 @@ jobs:
       - name: Run fast tests (unit, boundary, compatibility, error_handling)
         run: |
           now=$(date +"%Y-%m-%d_%H%M%S")
-          outdir="allure-report/${now}/report"
-          mkdir -p "$outdir"
+          resultsdir="allure-results/${now}"
+          mkdir -p "$resultsdir"
           pytest -m "unit or boundary or compatibility or error_handling" \
             -v \
             --tb=short \
-            --alluredir="$outdir" \
+            --alluredir="$resultsdir" \
             --maxfail=5 \
             -n 2 \
             --timeout=180
@@ -78,8 +78,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report
-          path: allure-report
+          name: allure-results
+          path: allure-results
           retention-days: 7
       
       - name: Stop Ollama
@@ -102,11 +102,6 @@ jobs:
         with:
           path: allure-report-merged
       
-      - name: Merge Allure results
-        run: |
-          # 不需再合併，直接用 allure-report-merged 目錄
-          echo "Skip merge, use allure-report-merged as is."
-
       - name: Install Allure CLI
         run: |
           echo "Installing Allure CLI..."
@@ -117,9 +112,16 @@ jobs:
       
       - name: Generate Allure report
         run: |
-          # 產生所有 {時間}/report 報告
-          for dir in $(find allure-report-merged -type d -name report); do
-            allure generate "$dir" -o "$dir" --clean || true
+          # 針對每個時間戳目錄，從 allure-results 產生 HTML 報告
+          shopt -s nullglob
+          for resultsdir in allure-report-merged/allure-results/*/; do
+            if [ -d "$resultsdir" ]; then
+              timestamp=$(basename "$resultsdir")
+              reportdir="allure-report-merged/allure-report/${timestamp}"
+              mkdir -p "$reportdir"
+              echo "Generating report from $resultsdir to $reportdir"
+              allure generate "$resultsdir" -o "$reportdir" --clean || true
+            fi
           done
       
       - name: Deploy Allure report to GitHub Pages
