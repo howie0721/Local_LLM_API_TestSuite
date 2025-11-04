@@ -24,6 +24,14 @@ on:
 jobs:
   manual-test:
     runs-on: ubuntu-latest
+    env:
+      OLLAMA_MODEL: tinyllama
+      OLLAMA_MAX_TOKENS: "32"
+      OLLAMA_NUM_PREDICT: "32"
+      OLLAMA_TEMPERATURE: "0.1"
+      OLLAMA_TIMEOUT: "120"
+      OLLAMA_RETRIES: "1"
+      OLLAMA_RETRY_BACKOFF: "2.0"
     
     steps:
       - name: Checkout code
@@ -56,10 +64,10 @@ jobs:
       
       - name: Pull and load model
         run: |
-          echo "Pulling llama3 model..."
-          docker exec ollama ollama pull llama3
+          echo "Pulling ${OLLAMA_MODEL} model..."
+          docker exec ollama ollama pull ${OLLAMA_MODEL}
           echo "Testing model with a simple query..."
-          docker exec ollama ollama run llama3 "Hi" --verbose
+          docker exec ollama ollama run ${OLLAMA_MODEL} "Hi" --verbose
           echo "Model is loaded and ready!"
         timeout-minutes: 5
       
@@ -70,7 +78,7 @@ jobs:
             -v \
             --tb=short \
             --alluredir=allure-results \
-            -n auto \
+            -n 2 \
             --timeout=180
         timeout-minutes: 20
       
