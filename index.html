@@ -181,24 +181,39 @@
         <p class="subtitle">自動化測試結果與品質報告</p>
         
         <div class="reports-grid">
-            <a href="pr-tests/" class="report-card pr">
+            <a href="pr-tests/allure-report/" class="report-card pr" id="pr-link">
                 <div class="report-icon">🚀</div>
                 <div class="report-title">PR 測試</div>
                 <div class="report-desc">快速回饋測試<br>Unit | Boundary | Compatibility</div>
             </a>
             
-            <a href="nightly-tests/" class="report-card nightly">
+            <a href="nightly-tests/" class="report-card nightly" id="nightly-link">
                 <div class="report-icon">🌙</div>
                 <div class="report-title">Nightly 測試</div>
                 <div class="report-desc">完整測試套件<br>E2E | Security | Regression</div>
             </a>
             
-            <a href="manual-tests/" class="report-card manual">
+            <a href="manual-tests/" class="report-card manual" id="manual-link">
                 <div class="report-icon">🎯</div>
                 <div class="report-title">Manual 測試</div>
                 <div class="report-desc">手動觸發測試<br>自定義測試範圍</div>
             </a>
         </div>
+        
+        <script>
+        // 自動找到最新的報告並更新連結
+        (function() {
+            // 這會在報告產生後由新的 workflow 更新
+            const latestPR = 'pr-tests/allure-report/'; // 會指向最新報告
+            const latestNightly = 'nightly-tests/';
+            const latestManual = 'manual-tests/';
+            
+            // 更新連結（如果需要的話）
+            document.getElementById('pr-link').href = latestPR;
+            document.getElementById('nightly-link').href = latestNightly;
+            document.getElementById('manual-link').href = latestManual;
+        })();
+        </script>
         
         <div class="info-section">
             <h2>📊 測試統計</h2>
