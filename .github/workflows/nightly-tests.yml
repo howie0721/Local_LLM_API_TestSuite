@@ -140,7 +140,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report-merged
-          destination_dir: pr-tests/nightly-tests
+          destination_dir: nightly-tests
       
       - name: Send notification on failure
         if: failure()
