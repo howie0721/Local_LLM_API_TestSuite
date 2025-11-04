@@ -58,7 +58,7 @@ jobs:
           echo "Testing model with a simple query..."
           docker exec ollama ollama run ${OLLAMA_MODEL} "Hi" --verbose
           echo "Model is loaded and ready!"
-        timeout-minutes: 5
+        timeout-minutes: 20
       
       - name: Run fast tests (unit, boundary, compatibility, error_handling)
         run: |
