@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local LLM API 測試報告</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 50px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .report-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+        
+        .report-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        
+        .report-card.pr {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .report-card.nightly {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .report-card.manual {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .report-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .report-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .report-desc {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .info-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .info-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-icon {
+            font-size: 2em;
+            margin-right: 15px;
+        }
+        
+        .info-content h3 {
+            color: #667eea;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .info-content p {
+            color: #666;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+            color: #999;
+        }
+        
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .github-link:hover {
+            color: #764ba2;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Local LLM API 測試報告</h1>
+        <p class="subtitle">自動化測試結果與品質報告</p>
+        
+        <div class="reports-grid">
+            <a href="pr-tests/allure-report/" class="report-card pr">
+                <div class="report-icon">🚀</div>
+                <div class="report-title">PR 測試</div>
+                <div class="report-desc">快速回饋測試<br>Unit | Boundary | Compatibility</div>
+            </a>
+            
+            <a href="nightly-tests/" class="report-card nightly">
+                <div class="report-icon">🌙</div>
+                <div class="report-title">Nightly 測試</div>
+                <div class="report-desc">完整測試套件<br>E2E | Security | Regression</div>
+            </a>
+            
+            <a href="manual-tests/" class="report-card manual">
+                <div class="report-icon">🎯</div>
+                <div class="report-title">Manual 測試</div>
+                <div class="report-desc">手動觸發測試<br>自定義測試範圍</div>
+            </a>
+        </div>
+        
+        <div class="info-section">
+            <h2>📊 測試統計</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-icon">📝</div>
+                    <div class="info-content">
+                        <h3>測試案例</h3>
+                        <p>56 個</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">📁</div>
+                    <div class="info-content">
+                        <h3>測試檔案</h3>
+                        <p>37 個</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">✅</div>
+                    <div class="info-content">
+                        <h3>通過率</h3>
+                        <p>97.5%</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">📈</div>
+                    <div class="info-content">
+                        <h3>覆蓋率</h3>
+                        <p>85.7%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Local LLM API Test Suite</p>
+            <a href="https://github.com/howie0721/Local_LLM_API_TestSuite" class="github-link" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                View on GitHub
+            </a>
+        </div>
+    </div>
+</body>
+</html>
