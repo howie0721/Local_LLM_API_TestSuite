@@ -1,0 +1,2 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1762294220543,23,Ollama llama3 Restart Recovery,404,Not Found,Restart Recovery 1-1,text,false,Test failed: code expected to contain /200/,166,273,1,1,http://localhost:11434/api/generate,20,0,15

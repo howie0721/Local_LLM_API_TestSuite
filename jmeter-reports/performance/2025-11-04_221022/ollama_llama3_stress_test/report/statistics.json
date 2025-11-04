@@ -1,0 +1,34 @@
+{
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 1,
+    "errorCount" : 1,
+    "errorPct" : 100.0,
+    "meanResTime" : 26.0,
+    "medianResTime" : 26.0,
+    "minResTime" : 26.0,
+    "maxResTime" : 26.0,
+    "pct1ResTime" : 26.0,
+    "pct2ResTime" : 26.0,
+    "pct3ResTime" : 26.0,
+    "throughput" : 38.46153846153847,
+    "receivedKBytesPerSec" : 6.234975961538462,
+    "sentKBytesPerSec" : 9.239783653846155
+  },
+  "Ollama llama3 Stress Request" : {
+    "transaction" : "Ollama llama3 Stress Request",
+    "sampleCount" : 1,
+    "errorCount" : 1,
+    "errorPct" : 100.0,
+    "meanResTime" : 26.0,
+    "medianResTime" : 26.0,
+    "minResTime" : 26.0,
+    "maxResTime" : 26.0,
+    "pct1ResTime" : 26.0,
+    "pct2ResTime" : 26.0,
+    "pct3ResTime" : 26.0,
+    "throughput" : 38.46153846153847,
+    "receivedKBytesPerSec" : 6.234975961538462,
+    "sentKBytesPerSec" : 9.239783653846155
+  }
+}
