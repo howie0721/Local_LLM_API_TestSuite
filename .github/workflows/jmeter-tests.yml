@@ -61,7 +61,7 @@ jobs:
           echo "Pulling ${OLLAMA_MODEL} model..."
           docker exec ollama ollama pull ${OLLAMA_MODEL}
           echo "Model is loaded and ready!"
-        timeout-minutes: 5
+        timeout-minutes: 20
       
       - name: Run JMeter Stability Tests
         if: ${{ inputs.test_type == 'stability' || inputs.test_type == 'all' || github.event_name == 'schedule' }}
