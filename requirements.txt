@@ -1,0 +1,11 @@
+# Core testing framework
+pytest>=7.4.0
+pytest-xdist>=3.3.0
+pytest-timeout>=2.1.0
+allure-pytest>=2.13.0
+
+# HTTP client
+requests>=2.31.0
+
+# Allure reporting (optional, can also install via CLI)
+# allure-pytest已包含 allure-python-commons

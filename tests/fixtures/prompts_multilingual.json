@@ -1,0 +1,12 @@
+[
+  {"lang": "en", "prompt": "Hello, how are you?"},
+  {"lang": "zh", "prompt": "你好，今天過得如何？"},
+  {"lang": "ja", "prompt": "こんにちは、お元気ですか？"},
+  {"lang": "fr", "prompt": "Bonjour, comment ça va ?"},
+  {"lang": "ar", "prompt": "مرحبا كيف حالك؟"},
+  {"lang": "ru", "prompt": "Привет, как дела?"},
+  {"lang": "es", "prompt": "Hola, ¿cómo estás?"},
+  {"lang": "ko", "prompt": "안녕하세요, 잘 지내세요?"},
+  {"lang": "de", "prompt": "Hallo, wie geht's?"},
+  {"lang": "th", "prompt": "สวัสดีคุณเป็นอย่างไรบ้าง"}
+]
