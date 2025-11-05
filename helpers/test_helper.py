@@ -146,12 +146,21 @@ class BatchTestHelper:
         if self.ollama_client is None:
             raise RuntimeError("BatchTestHelper 尚未注入 ollama_client，請於 fixture 傳入或改用靜態方法並傳 client 參數。")
 
-    def execute_batch(self, messages: list, count: int = 3, timeout: int = 60, model: str = None) -> list:
-        """相容既有測試的批量執行方法。"""
+    def execute_batch(self, messages: list, count: int = 3, timeout: int = 60, model: str = None, **kwargs) -> list:
+        """相容既有測試的批量執行方法。
+
+        備註：允許傳入額外參數（例如 temperature、max_tokens），將透傳給 chat API，
+        以支援在 CI 中設定 temperature=0 等提高穩定性的需求。
+        """
         self._require_client()
         results = []
         for _ in range(count):
-            response = self.ollama_client.chat(messages=messages, timeout=timeout, model=model)
+            response = self.ollama_client.chat(
+                messages=messages,
+                timeout=timeout,
+                model=model,
+                **kwargs,
+            )
             results.append(response)
         return results
 

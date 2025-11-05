@@ -14,9 +14,9 @@ def test_TC_INT_0003_multi_model_consistency(batch_helper, validator):
     primary_model = os.getenv("OLLAMA_MODEL", "tinyllama")
     secondary_model = os.getenv("OLLAMA_MODEL_2", None)
     
-    # 如果沒有第二個模型，跳過測試
-    if not secondary_model:
-        pytest.skip("需要設定 OLLAMA_MODEL_2 環境變數以測試多模型一致性")
+    # 如果沒有或與主模型相同，跳過此測試（避免誤判失敗）
+    if not secondary_model or secondary_model == primary_model:
+        pytest.skip("需要設定不同於 OLLAMA_MODEL 的 OLLAMA_MODEL_2 以測試多模型一致性")
     
     models = [primary_model, secondary_model]
     prompt = "請用一句話介紹你自己。"
@@ -25,6 +25,19 @@ def test_TC_INT_0003_multi_model_consistency(batch_helper, validator):
     keywords = ["llama", "ai", "助手", "模型", "language model", "assistant", 
                 "help", "artificial intelligence", "智能"]
     
+    # 先檢查第二個模型是否可用，不可用則跳過
+    try:
+        smoke = batch_helper.ollama_client.chat(
+            messages=[{"role": "user", "content": "hi"}],
+            model=secondary_model,
+            timeout=30,
+            temperature=0,
+        )
+        if smoke.status_code != 200:
+            pytest.skip(f"次要模型不可用或未拉取: {secondary_model} (status={smoke.status_code})")
+    except Exception:
+        pytest.skip(f"次要模型不可用或未拉取: {secondary_model}")
+
     for model in models:
         messages = [{"role": "user", "content": prompt}]
         try:
