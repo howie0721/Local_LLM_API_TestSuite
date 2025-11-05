@@ -118,12 +118,21 @@ jobs:
         run: |
           # 合併所有測試套件的結果到單一目錄
           mkdir -p allure-results-combined
-          for artifact_dir in allure-report-merged/allure-results-*/allure-results/*; do
-            if [ -d "$artifact_dir" ]; then
+          echo "Checking artifact structure..."
+          find allure-report-merged -type f -name "*.json" | head -20
+          
+          # 找到所有時間戳目錄並合併結果
+          for artifact_dir in allure-report-merged/allure-results-*/*/; do
+            if [ -d "$artifact_dir" ] && [ "$(ls -A $artifact_dir 2>/dev/null)" ]; then
               echo "Copying results from $artifact_dir"
-              cp -r "$artifact_dir"/* allure-results-combined/ || true
+              cp -r "$artifact_dir"/*.json allure-results-combined/ 2>/dev/null || true
+              cp -r "$artifact_dir"/*-container.json allure-results-combined/ 2>/dev/null || true
+              cp -r "$artifact_dir"/*-result.json allure-results-combined/ 2>/dev/null || true
             fi
           done
+          
+          echo "Combined results:"
+          ls -lh allure-results-combined/ | head -20
 
       - name: Install Allure CLI
         run: |
