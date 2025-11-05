@@ -46,8 +46,8 @@
         
         .reports-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
             margin-bottom: 40px;
         }
         
@@ -181,38 +181,34 @@
         <p class="subtitle">自動化測試結果與品質報告</p>
         
         <div class="reports-grid">
-            <a href="pr-tests/allure-report/" class="report-card pr" id="pr-link">
+            <a href="pr-tests/" class="report-card pr">
                 <div class="report-icon">🚀</div>
                 <div class="report-title">PR 測試</div>
                 <div class="report-desc">快速回饋測試<br>Unit | Boundary | Compatibility</div>
             </a>
             
-            <a href="nightly-tests/" class="report-card nightly" id="nightly-link">
+            <a href="nightly-tests/" class="report-card nightly">
                 <div class="report-icon">🌙</div>
                 <div class="report-title">Nightly 測試</div>
                 <div class="report-desc">完整測試套件<br>E2E | Security | Regression</div>
             </a>
             
-            <a href="manual-tests/" class="report-card manual" id="manual-link">
+            <a href="manual-tests/" class="report-card manual">
                 <div class="report-icon">🎯</div>
                 <div class="report-title">Manual 測試</div>
                 <div class="report-desc">手動觸發測試<br>自定義測試範圍</div>
             </a>
+            
+            <a href="jmeter-tests/" class="report-card">
+                <div class="report-icon">⚡</div>
+                <div class="report-title">JMeter 測試</div>
+                <div class="report-desc">性能與穩定性測試<br>Performance | Stability</div>
+            </a>
         </div>
         
         <script>
-        // 自動找到最新的報告並更新連結
-        (function() {
-            // 指向最新報告
-            const latestPR = 'pr-tests/allure-report/2025-11-04_233000/';
-            const latestNightly = 'nightly-tests/';
-            const latestManual = 'manual-tests/2025-11-04_225256/report/';
-            
-            // 更新連結
-            document.getElementById('pr-link').href = latestPR;
-            document.getElementById('nightly-link').href = latestNightly;
-            document.getElementById('manual-link').href = latestManual;
-        })();
+        // 所有報告都指向固定路徑，每次 workflow 執行會覆蓋最新版本
+        // 無需動態查找，直接使用固定連結即可
         </script>
         
         <div class="info-section">
