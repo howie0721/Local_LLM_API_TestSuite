@@ -126,6 +126,26 @@ jobs:
           name: allure-results-manual
           path: allure-report-merged
 
+      - name: Merge Allure results
+        run: |
+          # 合併所有時間戳的結果到單一目錄
+          mkdir -p allure-results-combined
+          echo "Checking artifact structure..."
+          find allure-report-merged -type f -name "*.json" | head -20
+          
+          # 找到所有時間戳目錄並合併結果
+          for resultsdir in allure-report-merged/*/; do
+            if [ -d "$resultsdir" ] && [ "$(ls -A $resultsdir 2>/dev/null)" ]; then
+              echo "Copying results from $resultsdir"
+              cp -r "$resultsdir"/*.json allure-results-combined/ 2>/dev/null || true
+              cp -r "$resultsdir"/*-container.json allure-results-combined/ 2>/dev/null || true
+              cp -r "$resultsdir"/*-result.json allure-results-combined/ 2>/dev/null || true
+            fi
+          done
+          
+          echo "Combined results:"
+          ls -lh allure-results-combined/ | head -20
+
       - name: Install Allure CLI
         if: always()
         run: |
@@ -135,19 +155,11 @@ jobs:
           sudo ln -s /opt/allure-2.27.0/bin/allure /usr/bin/allure
           allure --version
 
-      - name: Generate Allure report(s)
+      - name: Generate Allure report
         run: |
-          # 針對每個時間戳目錄，從 allure-results 產生 HTML 報告
-          shopt -s nullglob
-          for resultsdir in allure-report-merged/allure-results/*/; do
-            if [ -d "$resultsdir" ]; then
-              timestamp=$(basename "$resultsdir")
-              reportdir="allure-report-final/${timestamp}"
-              mkdir -p "$reportdir"
-              echo "Generating report from $resultsdir to $reportdir"
-              allure generate "$resultsdir" -o "$reportdir" --clean || true
-            fi
-          done
+          # 從合併的結果產生單一報告
+          mkdir -p allure-report-final
+          allure generate allure-results-combined -o allure-report-final --clean
 
       - name: Deploy Allure report to GitHub Pages
         if: always()
