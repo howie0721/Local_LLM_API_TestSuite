@@ -11,30 +11,18 @@
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
     a.card{display:block;text-decoration:none;color:#fff;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:24px;border-radius:14px;transition:.2s}
     a.card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(102,126,234,.35)}
+    .empty{background:#fff3;border-radius:12px;color:#333;padding:16px}
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🔄 JMeter 穩定性測試</h1>
-    <div class="grid" id="list"></div>
+    <div class="grid">
+<a class="card" href="ollama_llama3_long_context_stability/index.html"><strong>ollama_llama3_long_context_stability</strong><br/>查看報告</a>
+<a class="card" href="ollama_llama3_long_duration_stress/index.html"><strong>ollama_llama3_long_duration_stress</strong><br/>查看報告</a>
+<a class="card" href="ollama_llama3_memory_leak_simple/index.html"><strong>ollama_llama3_memory_leak_simple</strong><br/>查看報告</a>
+<a class="card" href="ollama_llama3_restart_recovery/index.html"><strong>ollama_llama3_restart_recovery</strong><br/>查看報告</a>
+    </div>
   </div>
-  <script>
-    const list = document.getElementById('list');
-    fetch('./')
-      .then(r => r.text())
-      .then(html => {
-        const m = html.match(/href=\"([^\"]+)\"/g) || [];
-        const entries = m.map(s => s.replace('href="','').replace('"',''))
-          .filter(p => p.endsWith('/') && p !== '../');
-        entries.forEach(p => {
-          const name = p.replace(/\/$/,'');
-          const a = document.createElement('a');
-          a.className = 'card';
-          a.href = p + 'index.html';
-          a.innerHTML = `<strong>${name}</strong><br/>查看報告`;
-          list.appendChild(a);
-        });
-      });
-  </script>
 </body>
 </html>

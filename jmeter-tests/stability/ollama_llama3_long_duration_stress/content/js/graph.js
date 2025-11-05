@@ -257,7 +257,7 @@ function refreshSyntheticResponseTimeDistribution() {
 };
 
 var activeThreadsOverTimeInfos = {
-        data: {"result": {"minY": 1.0, "minX": 1.76231646E12, "maxY": 1.0, "series": [{"data": [[1.76231646E12, 1.0]], "isOverall": false, "label": "Long Duration", "isController": false}], "supportsControllersDiscrimination": false, "granularity": 60000, "maxX": 1.76231646E12, "title": "Active Threads Over Time"}},
+        data: {"result": {"minY": 1.0, "minX": 1.7623215E12, "maxY": 1.0, "series": [{"data": [[1.7623215E12, 1.0]], "isOverall": false, "label": "Long Duration", "isController": false}], "supportsControllersDiscrimination": false, "granularity": 60000, "maxX": 1.7623215E12, "title": "Active Threads Over Time"}},
         getOptions: function() {
             return {
                 series: {
@@ -407,7 +407,7 @@ function refreshTimeVsThreads(){
 };
 
 var bytesThroughputOverTimeInfos = {
-        data : {"result": {"minY": 2.7666666666666666, "minX": 1.76231646E12, "maxY": 4.5, "series": [{"data": [[1.76231646E12, 2.7666666666666666]], "isOverall": false, "label": "Bytes received per second", "isController": false}, {"data": [[1.76231646E12, 4.5]], "isOverall": false, "label": "Bytes sent per second", "isController": false}], "supportsControllersDiscrimination": false, "granularity": 60000, "maxX": 1.76231646E12, "title": "Bytes Throughput Over Time"}},
+        data : {"result": {"minY": 2.7666666666666666, "minX": 1.7623215E12, "maxY": 4.5, "series": [{"data": [[1.7623215E12, 2.7666666666666666]], "isOverall": false, "label": "Bytes received per second", "isController": false}, {"data": [[1.7623215E12, 4.5]], "isOverall": false, "label": "Bytes sent per second", "isController": false}], "supportsControllersDiscrimination": false, "granularity": 60000, "maxX": 1.7623215E12, "title": "Bytes Throughput Over Time"}},
         getOptions : function(){
             return {
                 series: {
@@ -484,7 +484,7 @@ function refreshBytesThroughputOverTime(fixTimestamps) {
 }
 
 var responseTimesOverTimeInfos = {
-        data: {"result": {"minY": 24.0, "minX": 1.76231646E12, "maxY": 24.0, "series": [{"data": [[1.76231646E12, 24.0]], "isOverall": false, "label": "Ollama llama3 Long Duration", "isController": false}], "supportsControllersDiscrimination": true, "granularity": 60000, "maxX": 1.76231646E12, "title": "Response Time Over Time"}},
+        data: {"result": {"minY": 24.0, "minX": 1.7623215E12, "maxY": 24.0, "series": [{"data": [[1.7623215E12, 24.0]], "isOverall": false, "label": "Ollama llama3 Long Duration", "isController": false}], "supportsControllersDiscrimination": true, "granularity": 60000, "maxX": 1.7623215E12, "title": "Response Time Over Time"}},
         getOptions: function(){
             return {
                 series: {
@@ -565,7 +565,7 @@ function refreshResponseTimeOverTime(fixTimestamps) {
 };
 
 var latenciesOverTimeInfos = {
-        data: {"result": {"minY": 21.0, "minX": 1.76231646E12, "maxY": 21.0, "series": [{"data": [[1.76231646E12, 21.0]], "isOverall": false, "label": "Ollama llama3 Long Duration", "isController": false}], "supportsControllersDiscrimination": true, "granularity": 60000, "maxX": 1.76231646E12, "title": "Latencies Over Time"}},
+        data: {"result": {"minY": 21.0, "minX": 1.7623215E12, "maxY": 21.0, "series": [{"data": [[1.7623215E12, 21.0]], "isOverall": false, "label": "Ollama llama3 Long Duration", "isController": false}], "supportsControllersDiscrimination": true, "granularity": 60000, "maxX": 1.7623215E12, "title": "Latencies Over Time"}},
         getOptions: function() {
             return {
                 series: {
@@ -646,7 +646,7 @@ function refreshLatenciesOverTime(fixTimestamps) {
 };
 
 var connectTimeOverTimeInfos = {
-        data: {"result": {"minY": 16.0, "minX": 1.76231646E12, "maxY": 16.0, "series": [{"data": [[1.76231646E12, 16.0]], "isOverall": false, "label": "Ollama llama3 Long Duration", "isController": false}], "supportsControllersDiscrimination": true, "granularity": 60000, "maxX": 1.76231646E12, "title": "Connect Time Over Time"}},
+        data: {"result": {"minY": 16.0, "minX": 1.7623215E12, "maxY": 16.0, "series": [{"data": [[1.7623215E12, 16.0]], "isOverall": false, "label": "Ollama llama3 Long Duration", "isController": false}], "supportsControllersDiscrimination": true, "granularity": 60000, "maxX": 1.7623215E12, "title": "Connect Time Over Time"}},
         getOptions: function() {
             return {
                 series: {
@@ -948,7 +948,7 @@ function refreshLatenciesVsRequest() {
 };
 
 var hitsPerSecondInfos = {
-        data: {"result": {"minY": 0.016666666666666666, "minX": 1.76231646E12, "maxY": 0.016666666666666666, "series": [{"data": [[1.76231646E12, 0.016666666666666666]], "isOverall": false, "label": "hitsPerSecond", "isController": false}], "supportsControllersDiscrimination": false, "granularity": 60000, "maxX": 1.76231646E12, "title": "Hits Per Second"}},
+        data: {"result": {"minY": 0.016666666666666666, "minX": 1.7623215E12, "maxY": 0.016666666666666666, "series": [{"data": [[1.7623215E12, 0.016666666666666666]], "isOverall": false, "label": "hitsPerSecond", "isController": false}], "supportsControllersDiscrimination": false, "granularity": 60000, "maxX": 1.7623215E12, "title": "Hits Per Second"}},
         getOptions: function() {
             return {
                 series: {
@@ -1025,7 +1025,7 @@ function refreshHitsPerSecond(fixTimestamps) {
 }
 
 var codesPerSecondInfos = {
-        data: {"result": {"minY": 0.016666666666666666, "minX": 1.76231646E12, "maxY": 0.016666666666666666, "series": [{"data": [[1.76231646E12, 0.016666666666666666]], "isOverall": false, "label": "404", "isController": false}], "supportsControllersDiscrimination": false, "granularity": 60000, "maxX": 1.76231646E12, "title": "Codes Per Second"}},
+        data: {"result": {"minY": 0.016666666666666666, "minX": 1.7623215E12, "maxY": 0.016666666666666666, "series": [{"data": [[1.7623215E12, 0.016666666666666666]], "isOverall": false, "label": "404", "isController": false}], "supportsControllersDiscrimination": false, "granularity": 60000, "maxX": 1.7623215E12, "title": "Codes Per Second"}},
         getOptions: function(){
             return {
                 series: {
@@ -1102,7 +1102,7 @@ function refreshCodesPerSecond(fixTimestamps) {
 };
 
 var transactionsPerSecondInfos = {
-        data: {"result": {"minY": 0.016666666666666666, "minX": 1.76231646E12, "maxY": 0.016666666666666666, "series": [{"data": [[1.76231646E12, 0.016666666666666666]], "isOverall": false, "label": "Ollama llama3 Long Duration-failure", "isController": false}], "supportsControllersDiscrimination": true, "granularity": 60000, "maxX": 1.76231646E12, "title": "Transactions Per Second"}},
+        data: {"result": {"minY": 0.016666666666666666, "minX": 1.7623215E12, "maxY": 0.016666666666666666, "series": [{"data": [[1.7623215E12, 0.016666666666666666]], "isOverall": false, "label": "Ollama llama3 Long Duration-failure", "isController": false}], "supportsControllersDiscrimination": true, "granularity": 60000, "maxX": 1.7623215E12, "title": "Transactions Per Second"}},
         getOptions: function(){
             return {
                 series: {
@@ -1183,7 +1183,7 @@ function refreshTransactionsPerSecond(fixTimestamps) {
 };
 
 var totalTPSInfos = {
-        data: {"result": {"minY": 0.016666666666666666, "minX": 1.76231646E12, "maxY": 0.016666666666666666, "series": [{"data": [], "isOverall": false, "label": "Transaction-success", "isController": false}, {"data": [[1.76231646E12, 0.016666666666666666]], "isOverall": false, "label": "Transaction-failure", "isController": false}], "supportsControllersDiscrimination": true, "granularity": 60000, "maxX": 1.76231646E12, "title": "Total Transactions Per Second"}},
+        data: {"result": {"minY": 0.016666666666666666, "minX": 1.7623215E12, "maxY": 0.016666666666666666, "series": [{"data": [], "isOverall": false, "label": "Transaction-success", "isController": false}, {"data": [[1.7623215E12, 0.016666666666666666]], "isOverall": false, "label": "Transaction-failure", "isController": false}], "supportsControllersDiscrimination": true, "granularity": 60000, "maxX": 1.7623215E12, "title": "Total Transactions Per Second"}},
         getOptions: function(){
             return {
                 series: {

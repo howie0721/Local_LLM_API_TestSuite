@@ -187,7 +187,7 @@ $(document).ready(function() {
     }, [[0, 0]], 3);
 
     // Create statistics table
-    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 1, 1, 100.0, 89.0, 89, 89, 89.0, 89.0, 89.0, 89.0, 11.235955056179774, 1.8214536516853934, 3.2478932584269664], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["Ollama llama3 Multi-turn", 1, 1, 100.0, 89.0, 89, 89, 89.0, 89.0, 89.0, 89.0, 11.235955056179774, 1.8214536516853934, 3.2478932584269664], "isController": false}]}, function(index, item){
+    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 1, 1, 100.0, 69.0, 69, 69, 69.0, 69.0, 69.0, 69.0, 14.492753623188406, 2.3494112318840576, 4.1893115942028984], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["Ollama llama3 Multi-turn", 1, 1, 100.0, 69.0, 69, 69, 69.0, 69.0, 69.0, 69.0, 14.492753623188406, 2.3494112318840576, 4.1893115942028984], "isController": false}]}, function(index, item){
         switch(index){
             // Errors pct
             case 3:
