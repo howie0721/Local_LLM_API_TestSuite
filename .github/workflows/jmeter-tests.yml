@@ -66,14 +66,12 @@ jobs:
       - name: Run JMeter Stability Tests
         if: ${{ inputs.test_type == 'stability' || inputs.test_type == 'all' || github.event_name == 'schedule' }}
         run: |
-          now=$(date +"%Y-%m-%d_%H%M%S")
+          mkdir -p jmeter-jtl/stability
           for jmx in tests/stability/*.jmx; do
             if [ -f "$jmx" ]; then
               echo "Running stability test: $jmx"
               test_name=$(basename "$jmx" .jmx)
-              out_dir="jmeter-results/stability/${now}/${test_name}/report"
-              mkdir -p "$out_dir"
-              jmeter -n -t "$jmx" -l "jmeter-results/stability/${now}/${test_name}/${test_name}.jtl" -e -o "$out_dir" || true
+              jmeter -n -t "$jmx" -l "jmeter-jtl/stability/${test_name}.jtl" || true
             fi
           done
         timeout-minutes: 30
@@ -81,24 +79,167 @@ jobs:
       - name: Run JMeter Performance Tests
         if: ${{ inputs.test_type == 'performance' || inputs.test_type == 'all' }}
         run: |
-          now=$(date +"%Y-%m-%d_%H%M%S")
+          mkdir -p jmeter-jtl/performance
           for jmx in tests/performance/*.jmx; do
             if [ -f "$jmx" ]; then
               echo "Running performance test: $jmx"
               test_name=$(basename "$jmx" .jmx)
-              out_dir="jmeter-results/performance/${now}/${test_name}/report"
-              mkdir -p "$out_dir"
-              jmeter -n -t "$jmx" -l "jmeter-results/performance/${now}/${test_name}/${test_name}.jtl" -e -o "$out_dir" || true
+              jmeter -n -t "$jmx" -l "jmeter-jtl/performance/${test_name}.jtl" || true
             fi
           done
         timeout-minutes: 30
+      
+      - name: Generate JMeter HTML Reports
+        if: always()
+        run: |
+          # 為 stability 測試生成報告
+          if [ -d "jmeter-jtl/stability" ] && [ "$(ls -A jmeter-jtl/stability/*.jtl 2>/dev/null)" ]; then
+            for jtl in jmeter-jtl/stability/*.jtl; do
+              test_name=$(basename "$jtl" .jtl)
+              out_dir="jmeter-reports-final/stability/${test_name}"
+              mkdir -p "$out_dir"
+              echo "Generating stability report for $test_name"
+              jmeter -g "$jtl" -o "$out_dir" || true
+            done
+          fi
+          
+          # 為 performance 測試生成報告
+          if [ -d "jmeter-jtl/performance" ] && [ "$(ls -A jmeter-jtl/performance/*.jtl 2>/dev/null)" ]; then
+            for jtl in jmeter-jtl/performance/*.jtl; do
+              test_name=$(basename "$jtl" .jtl)
+              out_dir="jmeter-reports-final/performance/${test_name}"
+              mkdir -p "$out_dir"
+              echo "Generating performance report for $test_name"
+              jmeter -g "$jtl" -o "$out_dir" || true
+            done
+          fi
+          
+          # 創建索引頁面
+          cat > jmeter-reports-final/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="zh-TW">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>JMeter 測試報告</title>
+              <style>
+                  * { margin: 0; padding: 0; box-sizing: border-box; }
+                  body {
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', Arial, sans-serif;
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      min-height: 100vh;
+                      padding: 40px 20px;
+                  }
+                  .container {
+                      max-width: 1200px;
+                      margin: 0 auto;
+                      background: white;
+                      border-radius: 20px;
+                      padding: 40px;
+                      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                  }
+                  h1 {
+                      color: #333;
+                      text-align: center;
+                      margin-bottom: 40px;
+                      font-size: 2.5em;
+                  }
+                  .section {
+                      margin-bottom: 40px;
+                  }
+                  .section h2 {
+                      color: #667eea;
+                      margin-bottom: 20px;
+                      padding-bottom: 10px;
+                      border-bottom: 2px solid #eee;
+                  }
+                  .reports-grid {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                      gap: 20px;
+                  }
+                  .report-card {
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      border-radius: 15px;
+                      padding: 25px;
+                      color: white;
+                      text-decoration: none;
+                      display: block;
+                      transition: transform 0.3s ease, box-shadow 0.3s ease;
+                  }
+                  .report-card:hover {
+                      transform: translateY(-5px);
+                      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+                  }
+                  .report-card.performance {
+                      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                  }
+                  .report-card h3 {
+                      font-size: 1.3em;
+                      margin-bottom: 10px;
+                  }
+                  .report-card p {
+                      opacity: 0.9;
+                      font-size: 0.9em;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>⚡ JMeter 測試報告</h1>
+                  
+                  <div class="section">
+                      <h2>🔄 Stability Tests (穩定性測試)</h2>
+                      <div class="reports-grid" id="stability-reports"></div>
+                  </div>
+                  
+                  <div class="section">
+                      <h2>🚀 Performance Tests (性能測試)</h2>
+                      <div class="reports-grid" id="performance-reports"></div>
+                  </div>
+              </div>
+              
+              <script>
+                  // 自動掃描並列出報告
+                  const stabilityReports = [
+                      'TC_STABILITY_0001_continuous_load',
+                      'TC_STABILITY_0002_long_running'
+                  ];
+                  
+                  const performanceReports = [
+                      'TC_PERF_0001_concurrent_users',
+                      'TC_PERF_0002_response_time',
+                      'TC_PERF_0003_throughput'
+                  ];
+                  
+                  const stabilityGrid = document.getElementById('stability-reports');
+                  stabilityReports.forEach(name => {
+                      const card = document.createElement('a');
+                      card.href = `stability/${name}/index.html`;
+                      card.className = 'report-card';
+                      card.innerHTML = `<h3>${name}</h3><p>查看詳細報告</p>`;
+                      stabilityGrid.appendChild(card);
+                  });
+                  
+                  const perfGrid = document.getElementById('performance-reports');
+                  performanceReports.forEach(name => {
+                      const card = document.createElement('a');
+                      card.href = `performance/${name}/index.html`;
+                      card.className = 'report-card performance';
+                      card.innerHTML = `<h3>${name}</h3><p>查看詳細報告</p>`;
+                      perfGrid.appendChild(card);
+                  });
+              </script>
+          </body>
+          </html>
+          EOF
       
       - name: Upload JMeter Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-results-${{ inputs.test_type || 'scheduled' }}
-          path: jmeter-results/
+          path: jmeter-reports-final/
           retention-days: 14
       
       - name: Deploy JMeter Reports to GitHub Pages
@@ -106,8 +247,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: jmeter-results
-          destination_dir: jmeter-reports
+          publish_dir: jmeter-reports-final
+          destination_dir: jmeter-tests
       
       - name: Stop Ollama
         if: always()
