@@ -187,7 +187,7 @@ $(document).ready(function() {
     }, [[0, 0]], 3);
 
     // Create statistics table
-    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 1, 1, 100.0, 29.0, 29, 29, 29.0, 29.0, 29.0, 29.0, 34.48275862068965, 5.589978448275862, 9.092133620689655], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["Ollama llama3 Long Duration", 1, 1, 100.0, 29.0, 29, 29, 29.0, 29.0, 29.0, 29.0, 34.48275862068965, 5.589978448275862, 9.092133620689655], "isController": false}]}, function(index, item){
+    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 1, 1, 100.0, 25.0, 25, 25, 25.0, 25.0, 25.0, 25.0, 40.0, 6.484375, 10.546875], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["Ollama llama3 Long Duration", 1, 1, 100.0, 25.0, 25, 25, 25.0, 25.0, 25.0, 25.0, 40.0, 6.484375, 10.546875], "isController": false}]}, function(index, item){
         switch(index){
             // Errors pct
             case 3:
