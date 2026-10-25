@@ -13,7 +13,7 @@
     "pct3ResTime" : 26.0,
     "throughput" : 38.46153846153847,
     "receivedKBytesPerSec" : 6.234975961538462,
-    "sentKBytesPerSec" : 9.540264423076923
+    "sentKBytesPerSec" : 9.502704326923077
   },
   "Ollama llama3 Memory Leak" : {
     "transaction" : "Ollama llama3 Memory Leak",
@@ -29,6 +29,6 @@
     "pct3ResTime" : 26.0,
     "throughput" : 38.46153846153847,
     "receivedKBytesPerSec" : 6.234975961538462,
-    "sentKBytesPerSec" : 9.540264423076923
+    "sentKBytesPerSec" : 9.502704326923077
   }
 }
