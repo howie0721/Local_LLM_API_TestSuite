@@ -13,7 +13,7 @@
     "pct3ResTime" : 24.0,
     "throughput" : 41.666666666666664,
     "receivedKBytesPerSec" : 6.754557291666667,
-    "sentKBytesPerSec" : 11.149088541666666
+    "sentKBytesPerSec" : 11.067708333333334
   },
   "Total" : {
     "transaction" : "Total",
@@ -29,6 +29,6 @@
     "pct3ResTime" : 24.0,
     "throughput" : 41.666666666666664,
     "receivedKBytesPerSec" : 6.754557291666667,
-    "sentKBytesPerSec" : 11.149088541666666
+    "sentKBytesPerSec" : 11.067708333333334
   }
 }
